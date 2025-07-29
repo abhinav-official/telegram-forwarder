@@ -1,9 +1,10 @@
 # 🔒 Private Channel to DM Forwarding Guide
 
-This guide helps you set up the Telegram Auto-Forwarder to forward messages from private channels (where you're not an admin) to your personal DM.
+This guide helps you set up the Telegram Auto-Forwarder to forward messages from private channels (where you're not an admin) to your personal DM using **your own Telegram account** (not a bot).
 
 ## ⚠️ Important Notes
 
+- **Uses Your Personal Account**: This uses your Telegram account, not a bot
 - **Private Channel Access**: You must be a member of the private channel
 - **No Admin Rights Required**: You don't need to be an admin, just a member
 - **Channel ID Required**: For private channels, you need the channel ID, not the username
@@ -50,12 +51,17 @@ source venv/bin/activate
 python setup_private.py
 ```
 
-### 3. Start the Bot
+### 3. Start the Forwarder
 
 ```bash
-# Start the private channel forwarder
+# Start the private channel forwarder (uses your account)
 python main_private.py
 ```
+
+**First time setup**: You'll be prompted to:
+
+1. Enter your phone number
+2. Enter the verification code sent to Telegram
 
 ## 🔧 Configuration Options
 
@@ -76,11 +82,12 @@ def custom_filter(message):
 
 ## 📱 What You'll See
 
-When the bot runs:
+When the forwarder runs:
 
 - ✅ Messages from the private channel will be forwarded to your DM
 - ✅ Only messages matching your filter criteria will be forwarded
 - ✅ You'll see logs showing which messages were forwarded
+- ✅ Uses your personal Telegram account (not a bot)
 
 ## 🐛 Troubleshooting
 
@@ -108,13 +115,22 @@ When the bot runs:
 2. Ask the channel admin to add you
 3. Or use the invite link to join
 
+### "Phone number required"
+
+**Solution:**
+
+1. This is normal for first-time setup
+2. Enter your phone number when prompted
+3. Enter the verification code sent to Telegram
+
 ## 🎉 Success!
 
 Once set up correctly:
 
 - Messages from the private channel will automatically appear in your DM
-- The bot runs continuously and forwards messages in real-time
+- The forwarder runs continuously and forwards messages in real-time
 - You can customize which messages get forwarded using the filtering options
+- **Uses your personal account** - no bot required!
 
 ## 🔄 Switching Between Public and Private Channels
 
@@ -132,6 +148,13 @@ export SOURCE_CHANNEL="-1001234567890"
 source venv/bin/activate
 python setup_private.py
 
-# Start bot
+# Start forwarder (uses your account)
 python main_private.py
 ```
+
+## 🔐 Security Note
+
+- This uses your personal Telegram account
+- Your session is stored locally in `session.session`
+- Keep your API credentials secure
+- The forwarder only reads from the source channel and sends to your DM

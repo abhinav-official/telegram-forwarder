@@ -56,7 +56,7 @@ async def main():
     retry_count = 0
     while retry_count < MAX_RETRIES:
         try:
-            logger.info("Starting Telegram Auto-Forwarder (Private Channel to DM)...")
+            logger.info("Starting Telegram Auto-Forwarder (Private Channel to DM using your account)...")
             await client.start()
             logger.info("Client started successfully")
             

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Setup script for private channel to DM forwarding
-This script helps you configure the bot to forward from private channels to your DM
+This script helps you configure the forwarder to forward from private channels to your DM using your personal account
 """
 
 import os
@@ -10,8 +10,8 @@ from telethon import TelegramClient
 from config import *
 
 async def setup_private_forwarding():
-    """Setup private channel forwarding to DM"""
-    print("🔍 Setting up Private Channel to DM Forwarding...")
+    """Setup private channel forwarding to DM using personal account"""
+    print("🔍 Setting up Private Channel to DM Forwarding (using your account)...")
     
     # Check API credentials
     if not API_ID or not API_HASH:
@@ -72,7 +72,7 @@ async def setup_private_forwarding():
         print(f"   Source Channel: {SOURCE_CHANNEL}")
         print(f"   Target: Your DM (User ID: {me.id})")
         
-        print("\n🚀 To start the bot:")
+        print("\n🚀 To start the forwarder:")
         print("   source venv/bin/activate")
         print("   python main_private.py")
         
