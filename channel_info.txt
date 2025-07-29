@@ -1,18 +1,123 @@
 TELEGRAM CHANNEL INFORMATION
 ==================================================
 
-Your User ID: 8113672090
+Your User ID: 6814794406
 Your Username: @None
 
 CHANNELS:
 --------------------
-Title: MoviesMod Official
-ID: 2795904758
-Username: @moviesmodpro
+Title: Wallstreet Queen Official ViP
+ID: 2111428204
+Username: No username
 Type: Channel
 
-Title: User msgs
-ID: 2613757987
+Title: Binance Killers®
+ID: 1220789766
+Username: @binancekillers
+Type: Channel
+
+Title: Binance Killers® VIP Signals
+ID: 2039599280
+Username: No username
+Type: Channel
+
+Title: Binance Killers® VIP
+ID: 1178421859
+Username: No username
+Type: Channel
+
+Title: Always Win Premium
+ID: 2083487779
+Username: No username
+Type: Channel
+
+Title: Sureshot FX 🎯
+ID: 1218056271
+Username: @sureshot_fx
+Type: Channel
+
+Title: Wolfex ⚡️
+ID: 2102708436
+Username: No username
+Type: Channel
+
+Title: Wolfx Signals
+ID: 1365880004
+Username: @wolfxsignals_freegroup
+Type: Channel
+
+Title: 20PAISA.COM ( Nifty & BankNifty Option )
+ID: 1470229714
+Username: @Banknifty_specials
+Type: Channel
+
+Title: Index trading with CA Nitin Murarka (SMC)
+ID: 1151692601
+Username: @indextradingnitin
+Type: Channel
+
+Title: PIHU (NIFTY50 & BANKNIFTY) TRADING
+ID: 1869444747
+Username: No username
+Type: Channel
+
+Title: TradeX.live
+ID: 2043484553
+Username: No username
+Type: Channel
+
+Title: NEW Binance Killers® Cornix
+ID: 2438324580
+Username: No username
+Type: Channel
+
+Title: Crypto Inner Circle ViP
+ID: 2037473687
+Username: No username
+Type: Channel
+
+Title: EarnKsro
+ID: 2423820051
+Username: @earnksro4
+Type: Channel
+
+Title: Wallstreet Queen Official®
+ID: 1347728413
+Username: @wallstreetqueenofficial
+Type: Channel
+
+Title: Infinity Signals
+ID: 1544124896
+Username: @Infinity_Crypto_Signals
+Type: Channel
+
+Title: Booming Bulls Academy
+ID: 1532123006
+Username: @boomingbullscompany
+Type: Channel
+
+Title: Wolfx Signals Stats
+ID: 1501018187
+Username: @wolfxsignals_stats
+Type: Channel
+
+Title: TradeX.live Base Metal & Bullion
+ID: 2426371606
+Username: No username
+Type: Channel
+
+Title: TradeX.live NSE INDEX FUTURE OPTIONS
+ID: 2336146373
+Username: No username
+Type: Channel
+
+Title: 🏅 GoldSignals.io 🏅
+ID: 1451168389
+Username: No username
+Type: Channel
+
+Title: Tradex.live Crypto & Forex
+ID: 2348202690
 Username: No username
 Type: Channel
 
@@ -27,8 +132,123 @@ ID: 777000
 Username: No username
 Type: User
 
-Name: Arohan Subramonia
-ID: 1648450298
+Name: Cornix Notifications
+ID: 605763187
+Username: @cornix_notifications_bot
+Type: User
+
+Name: API Development Tools
+ID: 5207966024
+Username: @API_Development_bot
+Type: User
+
+Name: GetIDs Bot
+ID: 186675376
+Username: @getidsbot
+Type: User
+
+Name: Shyam Bhadane
+ID: 8166071331
 Username: No username
+Type: User
+
+Name: Cornix Trading Bot
+ID: 755802043
+Username: @cornix_trading_bot
+Type: User
+
+Name: Manoj Tank
+ID: 7882270517
+Username: No username
+Type: User
+
+Name: None
+ID: 7823254971
+Username: No username
+Type: User
+
+Name: Aswitha.G
+ID: 7321293315
+Username: No username
+Type: User
+
+Name: The CEO
+ID: 1439796211
+Username: @bkceo
+Type: User
+
+Name: Trade Swings
+ID: 7350691813
+Username: No username
+Type: User
+
+Name: None
+ID: 7941369561
+Username: No username
+Type: User
+
+Name: None
+ID: 7963886994
+Username: No username
+Type: User
+
+Name: Tanuja
+ID: 7704516641
+Username: No username
+Type: User
+
+Name: GIL : Sanket
+ID: 8186073074
+Username: No username
+Type: User
+
+Name: 2/O : Arun Kothari
+ID: 7696290377
+Username: No username
+Type: User
+
+Name: ETO - Paresh
+ID: 8126850601
+Username: No username
+Type: User
+
+Name: Naa Bamardi
+ID: 7717585095
+Username: No username
+Type: User
+
+Name: Sushant Pawar - TW
+ID: 8047444601
+Username: No username
+Type: User
+
+Name: Signalpeak Support
+ID: 681416625
+Username: @SignalpeakSupport
+Type: User
+
+Name: BotFather
+ID: 93372553
+Username: @BotFather
+Type: User
+
+Name: Signalpeak Bot
+ID: 7131788082
+Username: @Signalpeak_bot
+Type: User
+
+Name: GIL : Vaibhav Dalvi
+ID: 7508126927
+Username: No username
+Type: User
+
+Name: Volunteer Support
+ID: 490000
+Username: No username
+Type: User
+
+Name: Wall Street Queen
+ID: 889676557
+Username: @wallstreetqueenadmin
 Type: User
 

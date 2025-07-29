@@ -5,21 +5,19 @@ Modify these settings to customize the bot's behavior
 
 # Telegram API credentials
 
-# Abhinav's Account
-# API_ID = 24390163
-# API_HASH = "5ac2a3551509d703074db3c6862c5bb0"
 
-# Aman Dad's Account
-API_ID = 21669680
-API_HASH = "380f5c49dcd5a214a4b0e0922323ae8d"
+# Madhava's Account
+API_ID = 25918991
+API_HASH = "a0c40f9091e814a7c2Bafa597218b0c0"
 
-# Channel configuration - Update these with actual IDs from get_channels.py
-SOURCE_CHANNEL_ID = None  # Will be set after running get_channels.py
-TARGET_USER_ID = None     # Will be set after running get_channels.py
+
+# Channel configuration - Channel to Channel forwarding using usernames
+SOURCE_CHANNEL = "@binancekillers"  # Binance Killers® (main channel)
+TARGET_CHANNEL = "@earnksro4"      # EarnKsro
 
 # Message filtering configuration
 # Keywords to look for in messages (case-insensitive)
-KEYWORDS = ['buy', 'sell', 'signal', 'alert', 'trade']
+KEYWORDS = ['buy', 'sell', 'signal', 'alert', 'trade', 'long', 'short', 'entry', 'exit', 'target', 'stop']
 
 # Alternative: forward all messages
 FORWARD_ALL_MESSAGES = False
@@ -37,7 +35,7 @@ def custom_filter(message):
         bool: True to forward, False to ignore
     """
     # Example: forward messages containing keywords
-    keywords = ['alert', 'signal', 'trade', 'crypto', 'buy', 'sell']
+    keywords = ['alert', 'signal', 'trade', 'crypto', 'buy', 'sell', 'long', 'short', 'entry', 'exit', 'target', 'stop', 'vip']
     return any(keyword in message.lower() for keyword in keywords)
 
 # Logging configuration

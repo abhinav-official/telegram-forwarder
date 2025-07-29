@@ -16,9 +16,9 @@ if not all([API_ID, API_HASH]):
     logger.error("Missing required API credentials. Please check config.py")
     exit(1)
 
-if SOURCE_CHANNEL_ID is None or TARGET_USER_ID is None:
-    logger.error("Channel IDs not configured. Please run get_channels.py first and update config.py")
-    logger.error("Set SOURCE_CHANNEL_ID and TARGET_USER_ID in config.py")
+if SOURCE_CHANNEL is None or TARGET_CHANNEL is None:
+    logger.error("Channel usernames not configured. Please update config.py")
+    logger.error("Set SOURCE_CHANNEL and TARGET_CHANNEL in config.py")
     exit(1)
 
 client = TelegramClient(SESSION_NAME, int(API_ID), API_HASH)
@@ -40,13 +40,13 @@ def should_forward_message(message):
         # Fall back to keyword-based filtering
         return any(keyword in message.lower() for keyword in KEYWORDS)
 
-@client.on(events.NewMessage(chats=SOURCE_CHANNEL_ID))
+@client.on(events.NewMessage(chats=SOURCE_CHANNEL))
 async def handler(event):
     try:
         msg = event.message.message
         if should_forward_message(msg):
             logger.info(f"Forwarding message: {msg[:50]}...")
-            await client.send_message(TARGET_USER_ID, msg)
+            await client.send_message(TARGET_CHANNEL, msg)
             logger.info("Message forwarded successfully")
         else:
             logger.debug(f"Message filtered out: {msg[:30]}...")
@@ -58,8 +58,8 @@ async def main():
     while retry_count < MAX_RETRIES:
         try:
             logger.info("Starting Telegram Auto-Forwarder...")
-            logger.info(f"Source Channel ID: {SOURCE_CHANNEL_ID}")
-            logger.info(f"Target User ID: {TARGET_USER_ID}")
+            logger.info(f"Source Channel: {SOURCE_CHANNEL}")
+            logger.info(f"Target Channel: {TARGET_CHANNEL}")
             await client.start()
             logger.info("Client started successfully")
             

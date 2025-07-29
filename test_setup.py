@@ -17,8 +17,8 @@ async def test_connection():
     required_config = {
         "API_ID": API_ID,
         "API_HASH": API_HASH,
-        "SOURCE_CHANNEL_ID": SOURCE_CHANNEL_ID,
-        "TARGET_USER_ID": TARGET_USER_ID
+        "SOURCE_CHANNEL": SOURCE_CHANNEL,
+        "TARGET_CHANNEL": TARGET_CHANNEL
     }
     
     missing_config = []
@@ -34,7 +34,7 @@ async def test_connection():
     
     if missing_config:
         print(f"\n❌ Missing configuration: {', '.join(missing_config)}")
-        print("Please run get_channels.py first and update config.py with the channel IDs.")
+        print("Please update config.py with the channel usernames.")
         return False
     
     # Test Telegram connection
@@ -49,31 +49,31 @@ async def test_connection():
         
         # Test source channel
         try:
-            source_entity = await client.get_entity(SOURCE_CHANNEL_ID)
+            source_entity = await client.get_entity(SOURCE_CHANNEL)
             print(f"  ✅ Source channel accessible: {source_entity.title}")
         except Exception as e:
-            print(f"  ❌ Cannot access source channel {SOURCE_CHANNEL_ID}: {e}")
+            print(f"  ❌ Cannot access source channel {SOURCE_CHANNEL}: {e}")
             print("  💡 Make sure you're a member of the source channel")
             return False
         
-        # Test target user
+        # Test target channel
         try:
-            target_entity = await client.get_entity(TARGET_USER_ID)
-            print(f"  ✅ Target user accessible: {target_entity.first_name} {target_entity.last_name or ''}")
+            target_entity = await client.get_entity(TARGET_CHANNEL)
+            print(f"  ✅ Target channel accessible: {target_entity.title}")
         except Exception as e:
-            print(f"  ❌ Cannot access target user {TARGET_USER_ID}: {e}")
-            print("  💡 Make sure the user ID is correct")
+            print(f"  ❌ Cannot access target channel {TARGET_CHANNEL}: {e}")
+            print("  💡 Make sure you're a member of the target channel")
             return False
         
         # Test message sending (optional)
         print("\n📤 Testing message sending...")
         try:
             test_message = "🤖 Test message from Telegram Auto-Forwarder"
-            await client.send_message(TARGET_USER_ID, test_message)
-            print("  ✅ Successfully sent test message to target user")
-            print("  💡 You can delete this test message from your DM")
+            await client.send_message(TARGET_CHANNEL, test_message)
+            print("  ✅ Successfully sent test message to target channel")
+            print("  💡 You can delete this test message from the target channel")
         except Exception as e:
-            print(f"  ❌ Cannot send message to target user: {e}")
+            print(f"  ❌ Cannot send message to target channel: {e}")
             print("  💡 Make sure you have permission to send messages")
             return False
         
