@@ -1,0 +1,34 @@
+TELEGRAM CHANNEL INFORMATION
+==================================================
+
+Your User ID: 8113672090
+Your Username: @None
+
+CHANNELS:
+--------------------
+Title: MoviesMod Official
+ID: 2795904758
+Username: @moviesmodpro
+Type: Channel
+
+Title: User msgs
+ID: 2613757987
+Username: No username
+Type: Channel
+
+GROUPS:
+--------------------
+CHATS:
+--------------------
+USERS:
+--------------------
+Name: Telegram
+ID: 777000
+Username: No username
+Type: User
+
+Name: Arohan Subramonia
+ID: 1648450298
+Username: No username
+Type: User
+

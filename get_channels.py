@@ -7,7 +7,7 @@ Run this to find channel IDs and your user ID
 import asyncio
 from telethon import TelegramClient
 from telethon.tl.functions.messages import GetDialogsRequest
-from telethon.tl.types import InputPeerEmpty
+from telethon.tl.types import InputPeerEmpty, User, Chat, Channel
 
 # Your API credentials
 API_ID = 24390163
@@ -38,35 +38,46 @@ async def get_channels_and_user():
     channels = []
     groups = []
     chats = []
+    users = []
     
     for dialog in dialogs:
         entity = dialog.entity
         
-        # Get entity type and details
-        if hasattr(entity, 'megagroup') and entity.megagroup:
-            entity_type = "Supergroup"
-            groups.append({
+        # Handle different entity types
+        if isinstance(entity, User):
+            # This is a user (private chat)
+            users.append({
                 'id': entity.id,
-                'title': entity.title,
+                'name': f"{entity.first_name} {entity.last_name or ''}".strip(),
                 'username': getattr(entity, 'username', None),
-                'type': entity_type
+                'type': "User"
             })
-        elif hasattr(entity, 'broadcast') and entity.broadcast:
-            entity_type = "Channel"
-            channels.append({
-                'id': entity.id,
-                'title': entity.title,
-                'username': getattr(entity, 'username', None),
-                'type': entity_type
-            })
-        else:
-            entity_type = "Chat"
+        elif isinstance(entity, Chat):
+            # This is a basic chat/group
             chats.append({
                 'id': entity.id,
                 'title': entity.title,
                 'username': getattr(entity, 'username', None),
-                'type': entity_type
+                'type': "Chat"
             })
+        elif isinstance(entity, Channel):
+            # This is a channel or supergroup
+            if hasattr(entity, 'megagroup') and entity.megagroup:
+                entity_type = "Supergroup"
+                groups.append({
+                    'id': entity.id,
+                    'title': entity.title,
+                    'username': getattr(entity, 'username', None),
+                    'type': entity_type
+                })
+            else:
+                entity_type = "Channel"
+                channels.append({
+                    'id': entity.id,
+                    'title': entity.title,
+                    'username': getattr(entity, 'username', None),
+                    'type': entity_type
+                })
     
     print("📺 CHANNELS:")
     print("-" * 40)
@@ -98,6 +109,16 @@ async def get_channels_and_user():
         print(f"    Type: {chat['type']}")
         print()
     
+    print("👤 USERS (Private Chats):")
+    print("-" * 40)
+    for i, user in enumerate(users, 1):
+        username_str = f"@{user['username']}" if user['username'] else "No username"
+        print(f"{i:2d}. {user['name']}")
+        print(f"    ID: {user['id']}")
+        print(f"    Username: {username_str}")
+        print(f"    Type: {user['type']}")
+        print()
+    
     # Save to file for easy reference
     with open('channel_info.txt', 'w') as f:
         f.write("TELEGRAM CHANNEL INFORMATION\n")
@@ -122,6 +143,24 @@ async def get_channels_and_user():
             f.write(f"ID: {group['id']}\n")
             f.write(f"Username: {username_str}\n")
             f.write(f"Type: {group['type']}\n\n")
+        
+        f.write("CHATS:\n")
+        f.write("-" * 20 + "\n")
+        for chat in chats:
+            username_str = f"@{chat['username']}" if chat['username'] else "No username"
+            f.write(f"Title: {chat['title']}\n")
+            f.write(f"ID: {chat['id']}\n")
+            f.write(f"Username: {username_str}\n")
+            f.write(f"Type: {chat['type']}\n\n")
+        
+        f.write("USERS:\n")
+        f.write("-" * 20 + "\n")
+        for user in users:
+            username_str = f"@{user['username']}" if user['username'] else "No username"
+            f.write(f"Name: {user['name']}\n")
+            f.write(f"ID: {user['id']}\n")
+            f.write(f"Username: {username_str}\n")
+            f.write(f"Type: {user['type']}\n\n")
     
     print(f"💾 Channel information saved to 'channel_info.txt'")
     print("\n🎯 To use in your bot:")

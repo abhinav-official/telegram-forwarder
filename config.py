@@ -4,8 +4,14 @@ Modify these settings to customize the bot's behavior
 """
 
 # Telegram API credentials
-API_ID = 24390163
-API_HASH = "5ac2a3551509d703074db3c6862c5bb0"
+
+# Abhinav's Account
+# API_ID = 24390163
+# API_HASH = "5ac2a3551509d703074db3c6862c5bb0"
+
+# Aman Dad's Account
+API_ID = 21669680
+API_HASH = "380f5c49dcd5a214a4b0e0922323ae8d"
 
 # Channel configuration - Update these with actual IDs from get_channels.py
 SOURCE_CHANNEL_ID = None  # Will be set after running get_channels.py
