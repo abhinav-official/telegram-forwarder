@@ -3,19 +3,17 @@ Configuration file for Telegram Auto-Forwarder
 Modify these settings to customize the bot's behavior
 """
 
-import os
+# Telegram API credentials
+API_ID = 24390163
+API_HASH = "5ac2a3551509d703074db3c6862c5bb0"
 
-# Telegram API credentials (set via environment variables)
-API_ID = os.getenv("API_ID")
-API_HASH = os.getenv("API_HASH")
-
-# Channel configuration
-SOURCE_CHANNEL = os.getenv("SOURCE_CHANNEL")
-TARGET_CHANNEL = os.getenv("TARGET_CHANNEL")
+# Channel configuration - Update these with actual IDs from get_channels.py
+SOURCE_CHANNEL_ID = None  # Will be set after running get_channels.py
+TARGET_USER_ID = None     # Will be set after running get_channels.py
 
 # Message filtering configuration
 # Keywords to look for in messages (case-insensitive)
-KEYWORDS = ['buy', 'sell']
+KEYWORDS = ['buy', 'sell', 'signal', 'alert', 'trade']
 
 # Alternative: forward all messages
 FORWARD_ALL_MESSAGES = False
@@ -32,8 +30,8 @@ def custom_filter(message):
     Returns:
         bool: True to forward, False to ignore
     """
-    # Example: forward messages containing 'alert' or 'signal'
-    keywords = ['alert', 'signal', 'trade', 'crypto']
+    # Example: forward messages containing keywords
+    keywords = ['alert', 'signal', 'trade', 'crypto', 'buy', 'sell']
     return any(keyword in message.lower() for keyword in keywords)
 
 # Logging configuration

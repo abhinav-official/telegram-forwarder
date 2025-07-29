@@ -1,213 +1,97 @@
-# 📦 Telegram Auto-Forwarder with Telethon on Fly.io
+# 🤖 Telegram Auto-Forwarder
 
-A lightweight, 24/7 bot to automatically forward messages from one Telegram channel to another using your personal account (Telethon). Runs on **Fly.io's free tier**.
+Automatically forward messages from Telegram channels to your DM based on keywords.
 
----
+## ✨ Features
 
-## 🔧 Requirements
+- 🔍 **Smart Filtering**: Forward messages containing specific keywords
+- 📱 **DM Forwarding**: Send filtered messages directly to your Telegram DM
+- 🚀 **Easy Setup**: Simple configuration with channel IDs
+- 🔄 **24/7 Operation**: Can run continuously on Fly.io's free tier
+- 🎛️ **Customizable**: Easy to modify keywords and filtering logic
 
-- Python 3.10+
-- Fly.io account ([https://fly.io](https://fly.io))
-- Telegram API credentials
-- Basic Git and CLI knowledge
+## 🚀 Quick Start
 
----
-
-## 📌 Step 1: Get Telegram API Credentials
-
-1. Go to [https://my.telegram.org](https://my.telegram.org)
-2. Log in with your Telegram phone number
-3. Click **API Development Tools**
-4. Create a new app (name doesn't matter)
-5. Save:
-   - `api_id`
-   - `api_hash`
-
----
-
-## 📌 Step 2: Create and Clone Your Repo
+### 1. Get Your Channel IDs
 
 ```bash
-git init telegram-forwarder
-cd telegram-forwarder
+# Run the channel fetcher script
+python get_channels.py
 ```
 
----
+This will show you all your channels and your user ID. Note down:
 
-## 📌 Step 3: Create Project Files
+- Your **User ID** (for target DM)
+- The **Channel ID** you want to monitor (for source)
 
-### `main.py`
+### 2. Configure the Bot
+
+Edit `config.py` and set your channel IDs:
 
 ```python
-from telethon import TelegramClient, events
-import os
-
-api_id = int(os.getenv("API_ID"))
-api_hash = os.getenv("API_HASH")
-source_channel = os.getenv("SOURCE_CHANNEL")
-target_channel = os.getenv("TARGET_CHANNEL")
-
-client = TelegramClient("session", api_id, api_hash)
-
-@client.on(events.NewMessage(chats=source_channel))
-async def handler(event):
-    msg = event.message.message
-    if msg and ('buy' in msg.lower() or 'sell' in msg.lower()):
-        await client.send_message(target_channel, msg)
-
-client.start()
-client.run_until_disconnected()
+SOURCE_CHANNEL_ID = -1001234567890  # Your source channel ID
+TARGET_USER_ID = 123456789          # Your user ID (for DM)
 ```
 
-### `requirements.txt`
-
-```
-telethon==1.34.0
-```
-
-### `Dockerfile`
-
-```dockerfile
-FROM python:3.10-slim
-
-WORKDIR /app
-
-COPY . .
-
-RUN pip install -r requirements.txt
-
-CMD ["python", "main.py"]
-```
-
-### `fly.toml`
-
-```toml
-app = "telegram-forwarder-bot"
-
-[env]
-PYTHONUNBUFFERED = "1"
-
-[[services]]
-  internal_port = 8080
-  protocol = "tcp"
-
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-```
-
----
-
-## 📌 Step 4: Install Fly.io CLI
+### 3. Test Your Setup
 
 ```bash
-# macOS
-brew install flyctl
-
-# Linux
-curl -L https://fly.io/install.sh | sh
-
-# Windows
-iwr https://fly.io/install.ps1 -useb | iex
+python test_setup.py
 ```
 
----
-
-## 📌 Step 5: Deploy to Fly.io
+### 4. Run the Bot
 
 ```bash
-# Login to Fly.io
-fly auth login
-
-# Create app (replace with your app name)
-fly apps create telegram-forwarder-bot
-
-# Set environment variables
-fly secrets set API_ID="your_api_id"
-fly secrets set API_HASH="your_api_hash"
-fly secrets set SOURCE_CHANNEL="@source_channel_username"
-fly secrets set TARGET_CHANNEL="@target_channel_username"
-
-# Deploy
-fly deploy
-```
-
----
-
-## 📌 Step 6: First Run Authentication
-
-After deployment, you'll need to authenticate with Telegram:
-
-```bash
-# Connect to your app
-fly ssh console
-
-# Run the bot (this will prompt for phone number)
 python main.py
 ```
 
-Follow the prompts to enter your phone number and verification code.
+## 🔧 Configuration
 
----
+Edit `config.py` to customize:
 
-## ✅ Done! Your bot now runs 24/7 on Fly.io's free tier.
+- **Keywords**: `KEYWORDS = ['buy', 'sell', 'signal', 'alert', 'trade']`
+- **Forward all**: `FORWARD_ALL_MESSAGES = True`
+- **Custom filter**: Modify the `custom_filter()` function
 
----
+## 🚀 Deploy to Fly.io (Optional)
 
-## 🔧 Customization
+For 24/7 operation:
 
-### Change Message Filter
+```bash
+# Install Fly.io CLI
+brew install flyctl
 
-Edit the condition in `main.py`:
-
-```python
-# Current: forwards messages containing 'buy' or 'sell'
-if msg and ('buy' in msg.lower() or 'sell' in msg.lower()):
-
-# Example: forward all messages
-if msg:
-
-# Example: forward messages with specific keywords
-if msg and any(word in msg.lower() for word in ['alert', 'signal', 'trade']):
+# Deploy
+./deploy.sh
 ```
 
-### Add More Channels
+## 📁 Project Structure
 
-Add multiple source channels:
-
-```python
-source_channels = [os.getenv("SOURCE_CHANNEL_1"), os.getenv("SOURCE_CHANNEL_2")]
-
-@client.on(events.NewMessage(chats=source_channels))
+```
+telegram-forwarder/
+├── main.py              # Main bot logic
+├── config.py            # Configuration settings
+├── get_channels.py      # Channel ID fetcher
+├── test_setup.py        # Setup testing
+├── requirements.txt      # Python dependencies
+├── deploy.sh            # Fly.io deployment
+├── Dockerfile           # Container configuration
+├── fly.toml            # Fly.io configuration
+└── README.md           # This file
 ```
 
----
+## 🔐 Security
 
-## 🚨 Important Notes
-
-- **Rate Limits**: Be mindful of Telegram's rate limits
-- **Session File**: The session file is stored in Fly.io's ephemeral storage
-- **Re-authentication**: You may need to re-authenticate after app restarts
-- **Free Tier**: Fly.io free tier includes 3 shared-cpu-1x 256mb VMs
-
----
+- API credentials are hardcoded in `config.py`
+- Session files are excluded from git
+- Channel IDs are used instead of usernames for better privacy
 
 ## 🐛 Troubleshooting
 
-### Bot not forwarding messages?
+- **"Cannot access channel"**: Make sure you're a member of the source channel
+- **"Cannot send message"**: Check your user ID is correct
+- **"API credentials invalid"**: Verify your API_ID and API_HASH
 
-1. Check if you're a member of both channels
-2. Verify channel usernames in environment variables
-3. Check Fly.io logs: `fly logs`
+## 📝 License
 
-### Authentication issues?
-
-1. Ensure your phone number is correct
-2. Check if you have 2FA enabled
-3. Try re-authenticating: `fly ssh console` then `python main.py`
-
-### Deployment issues?
-
-1. Check Fly.io status: `fly status`
-2. View logs: `fly logs`
-3. Restart app: `fly apps restart telegram-forwarder-bot`
+MIT License - feel free to use and modify!

@@ -4,7 +4,6 @@ Test script for Telegram Auto-Forwarder
 Run this to verify your configuration before deployment
 """
 
-import os
 import asyncio
 from telethon import TelegramClient
 from config import *
@@ -13,26 +12,29 @@ async def test_connection():
     """Test the Telegram connection and channel access"""
     print("🔍 Testing Telegram Auto-Forwarder setup...")
     
-    # Check environment variables
-    print("\n📋 Checking environment variables:")
-    required_vars = {
+    # Check configuration
+    print("\n📋 Checking configuration:")
+    required_config = {
         "API_ID": API_ID,
         "API_HASH": API_HASH,
-        "SOURCE_CHANNEL": SOURCE_CHANNEL,
-        "TARGET_CHANNEL": TARGET_CHANNEL
+        "SOURCE_CHANNEL_ID": SOURCE_CHANNEL_ID,
+        "TARGET_USER_ID": TARGET_USER_ID
     }
     
-    missing_vars = []
-    for var_name, var_value in required_vars.items():
+    missing_config = []
+    for var_name, var_value in required_config.items():
         if var_value:
-            print(f"  ✅ {var_name}: {'*' * len(str(var_value))} (hidden)")
+            if var_name == "API_HASH":
+                print(f"  ✅ {var_name}: {'*' * len(str(var_value))} (hidden)")
+            else:
+                print(f"  ✅ {var_name}: {var_value}")
         else:
             print(f"  ❌ {var_name}: Not set")
-            missing_vars.append(var_name)
+            missing_config.append(var_name)
     
-    if missing_vars:
-        print(f"\n❌ Missing environment variables: {', '.join(missing_vars)}")
-        print("Please set these variables before running the bot.")
+    if missing_config:
+        print(f"\n❌ Missing configuration: {', '.join(missing_config)}")
+        print("Please run get_channels.py first and update config.py with the channel IDs.")
         return False
     
     # Test Telegram connection
@@ -47,31 +49,31 @@ async def test_connection():
         
         # Test source channel
         try:
-            source_entity = await client.get_entity(SOURCE_CHANNEL)
+            source_entity = await client.get_entity(SOURCE_CHANNEL_ID)
             print(f"  ✅ Source channel accessible: {source_entity.title}")
         except Exception as e:
-            print(f"  ❌ Cannot access source channel {SOURCE_CHANNEL}: {e}")
+            print(f"  ❌ Cannot access source channel {SOURCE_CHANNEL_ID}: {e}")
             print("  💡 Make sure you're a member of the source channel")
             return False
         
-        # Test target channel
+        # Test target user
         try:
-            target_entity = await client.get_entity(TARGET_CHANNEL)
-            print(f"  ✅ Target channel accessible: {target_entity.title}")
+            target_entity = await client.get_entity(TARGET_USER_ID)
+            print(f"  ✅ Target user accessible: {target_entity.first_name} {target_entity.last_name or ''}")
         except Exception as e:
-            print(f"  ❌ Cannot access target channel {TARGET_CHANNEL}: {e}")
-            print("  💡 Make sure you're a member of the target channel")
+            print(f"  ❌ Cannot access target user {TARGET_USER_ID}: {e}")
+            print("  💡 Make sure the user ID is correct")
             return False
         
         # Test message sending (optional)
         print("\n📤 Testing message sending...")
         try:
             test_message = "🤖 Test message from Telegram Auto-Forwarder"
-            await client.send_message(TARGET_CHANNEL, test_message)
-            print("  ✅ Successfully sent test message to target channel")
-            print("  💡 You can delete this test message from the target channel")
+            await client.send_message(TARGET_USER_ID, test_message)
+            print("  ✅ Successfully sent test message to target user")
+            print("  💡 You can delete this test message from your DM")
         except Exception as e:
-            print(f"  ❌ Cannot send message to target channel: {e}")
+            print(f"  ❌ Cannot send message to target user: {e}")
             print("  💡 Make sure you have permission to send messages")
             return False
         
@@ -115,8 +117,9 @@ if __name__ == "__main__":
         
         print("\n🎉 Setup test completed successfully!")
         print("\n📝 Next steps:")
-        print("  1. Deploy to Fly.io: ./deploy.sh")
-        print("  2. Authenticate: fly ssh console && python main.py")
-        print("  3. Monitor logs: fly logs")
+        print("  1. Run the bot: python main.py")
+        print("  2. Deploy to Fly.io: ./deploy.sh (optional)")
+        print("  3. Monitor logs: fly logs (if deployed)")
     else:
-        print("\n❌ Setup test failed. Please fix the issues above.") 
+        print("\n❌ Setup test failed. Please fix the issues above.")
+        print("\n💡 To get channel IDs, run: python get_channels.py") 
